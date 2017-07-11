@@ -16,46 +16,30 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 /**
  * Created by greenlucky on 6/3/17.
  */
-public class SJPABookRepository implements SBookRepository{
+public class BookRepositoryImpl implements BookRepository{
 
     private final JPAApi jpaApi;
     private final DatabaseExecutionContext executionContext;
 
     @Inject
-    public SJPABookRepository(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
+    public BookRepositoryImpl(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
         this.jpaApi = jpaApi;
         this.executionContext = executionContext;
     }
 
     @Override
-    public Book add(Book book) {
-        //jpaApi.withTransaction(() -> {
-            EntityManager em = jpaApi.em();
-            em.getTransaction().begin();
-            //insert(em, book);
-            em.persist(book);
-            em.getTransaction().commit();
-            em.close();
-        //});
-        return book;
+    public CompletionStage<Book> add(Book book) {
+        return supplyAsync(() -> insert(jpaApi.em("book"), book), executionContext);
     }
 
     @Override
-    public Stream<Book> list() {
-        jpaApi.withTransaction(() -> {
-            EntityManager em = jpaApi.em();
-            return list(em);
-        });
-        return null;
+    public CompletionStage<Stream<Book>> list() {
+        return supplyAsync(() -> list(jpaApi.em("book")), executionContext);
     }
 
     @Override
-    public Boolean delete(long id) {
-        return null;
-    }
-
-    private  <T> T wrap(Function<EntityManager, T> function) {
-        return jpaApi.withTransaction(function);
+    public CompletionStage<Boolean> delete(long id) {
+        return supplyAsync(() -> remove(jpaApi.em("book"), id), executionContext);
     }
 
     private Book insert(EntityManager em, Book book) {

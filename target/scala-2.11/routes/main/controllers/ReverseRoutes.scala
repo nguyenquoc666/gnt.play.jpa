@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/WorkSpace/GNT/Project/play-jpa/conf/routes
-// @DATE:Tue Jul 11 21:06:04 ICT 2017
+// @DATE:Wed Jul 12 06:12:44 ICT 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -54,6 +54,18 @@ package controllers {
     def index(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "book")
+    }
+  
+    // @LINE:22
+    def addBookWithTran(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "test_book")
+    }
+  
+    // @LINE:23
+    def getBooksWithTran(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "test_books")
     }
   
   }

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/WorkSpace/GNT/Project/play-jpa/conf/routes
-// @DATE:Tue Jul 11 21:06:04 ICT 2017
+// @DATE:Wed Jul 12 06:12:44 ICT 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -79,6 +79,26 @@ package controllers.javascript {
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "book"})
+        }
+      """
+    )
+  
+    // @LINE:22
+    def addBookWithTran: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.BookController.addBookWithTran",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "test_book"})
+        }
+      """
+    )
+  
+    // @LINE:23
+    def getBooksWithTran: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.BookController.getBooksWithTran",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "test_books"})
         }
       """
     )

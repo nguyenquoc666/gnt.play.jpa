@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 /**
  * Created by greenlucky on 6/3/17.
  */
-@ImplementedBy(JPABookRepository.class)
+@ImplementedBy(BookRepositoryImpl.class)
 public interface BookRepository {
 
     CompletionStage<Book> add(Book book);

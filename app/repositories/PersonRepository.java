@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 /**
  * Created by greenlucky on 6/2/17.
  */
-@ImplementedBy(JPAPersonRepository.class)
+@ImplementedBy(PersonRepositoryImpl.class)
 public interface PersonRepository {
 
     CompletionStage<Person> add(Person person);

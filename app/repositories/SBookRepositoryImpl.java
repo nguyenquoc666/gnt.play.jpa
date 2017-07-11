@@ -16,30 +16,42 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 /**
  * Created by greenlucky on 6/3/17.
  */
-public class JPABookRepository implements BookRepository{
+public class SBookRepositoryImpl implements SBookRepository{
 
     private final JPAApi jpaApi;
     private final DatabaseExecutionContext executionContext;
 
     @Inject
-    public JPABookRepository(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
+    public SBookRepositoryImpl(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
         this.jpaApi = jpaApi;
         this.executionContext = executionContext;
     }
 
     @Override
-    public CompletionStage<Book> add(Book book) {
-        return supplyAsync(() -> wrap(em -> insert(em, book)), executionContext);
+    public Book add(Book book) {
+        //jpaApi.withTransaction(() -> {
+            EntityManager em = jpaApi.em();
+            em.getTransaction().begin();
+            //insert(em, book);
+            em.persist(book);
+            em.getTransaction().commit();
+            em.close();
+        //});
+        return book;
     }
 
     @Override
-    public CompletionStage<Stream<Book>> list() {
-        return supplyAsync(() -> wrap(em -> list(em)), executionContext);
+    public Stream<Book> list() {
+        jpaApi.withTransaction(() -> {
+            EntityManager em = jpaApi.em();
+            return list(em);
+        });
+        return null;
     }
 
     @Override
-    public CompletionStage<Boolean> delete(long id) {
-        return supplyAsync(() -> wrap(em -> remove(em, id)), executionContext);
+    public Boolean delete(long id) {
+        return null;
     }
 
     private  <T> T wrap(Function<EntityManager, T> function) {

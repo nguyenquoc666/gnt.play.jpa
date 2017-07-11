@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/WorkSpace/GNT/Project/play-jpa/conf/routes
-// @DATE:Tue Jul 11 21:06:04 ICT 2017
+// @DATE:Wed Jul 12 06:12:44 ICT 2017
 
 package controllers;
 

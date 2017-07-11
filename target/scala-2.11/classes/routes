@@ -17,3 +17,7 @@ GET         /delete-book         controllers.BookController.deleteBook(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
+
+# Test
+GET         /test_book           controllers.BookController.addBookWithTran()
+GET         /test_books          controllers.BookController.getBooksWithTran()

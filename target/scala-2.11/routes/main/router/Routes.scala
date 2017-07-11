@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/WorkSpace/GNT/Project/play-jpa/conf/routes
-// @DATE:Tue Jul 11 21:06:04 ICT 2017
+// @DATE:Wed Jul 12 06:12:44 ICT 2017
 
 package router
 
@@ -57,6 +57,8 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """books""", """controllers.BookController.getBooks()"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """delete-book""", """controllers.BookController.deleteBook(id:Long)"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.at(path:String = "/public", file:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """test_book""", """controllers.BookController.addBookWithTran()"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """test_books""", """controllers.BookController.getBooksWithTran()"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -234,6 +236,40 @@ class Routes(
     )
   )
 
+  // @LINE:22
+  private[this] lazy val controllers_BookController_addBookWithTran10_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("test_book")))
+  )
+  private[this] lazy val controllers_BookController_addBookWithTran10_invoker = createInvoker(
+    BookController_0.addBookWithTran(),
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.BookController",
+      "addBookWithTran",
+      Nil,
+      "GET",
+      """ Test""",
+      this.prefix + """test_book"""
+    )
+  )
+
+  // @LINE:23
+  private[this] lazy val controllers_BookController_getBooksWithTran11_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("test_books")))
+  )
+  private[this] lazy val controllers_BookController_getBooksWithTran11_invoker = createInvoker(
+    BookController_0.getBooksWithTran(),
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.BookController",
+      "getBooksWithTran",
+      Nil,
+      "GET",
+      """""",
+      this.prefix + """test_books"""
+    )
+  )
+
 
   def routes: PartialFunction[RequestHeader, Handler] = {
   
@@ -295,6 +331,18 @@ class Routes(
     case controllers_Assets_at9_route(params) =>
       call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         controllers_Assets_at9_invoker.call(Assets_1.at(path, file))
+      }
+  
+    // @LINE:22
+    case controllers_BookController_addBookWithTran10_route(params) =>
+      call { 
+        controllers_BookController_addBookWithTran10_invoker.call(BookController_0.addBookWithTran())
+      }
+  
+    // @LINE:23
+    case controllers_BookController_getBooksWithTran11_route(params) =>
+      call { 
+        controllers_BookController_getBooksWithTran11_invoker.call(BookController_0.getBooksWithTran())
       }
   }
 }

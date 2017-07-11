@@ -17,13 +17,13 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 /**
  * Created by greenlucky on 6/3/17.
  */
-public class JPAPersonRepository implements PersonRepository {
+public class PersonRepositoryImpl implements PersonRepository {
 
     private final JPAApi jpaApi;
     private final DatabaseExecutionContext executionContext;
 
     @Inject
-    public JPAPersonRepository(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
+    public PersonRepositoryImpl(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
         this.jpaApi = jpaApi;
         this.executionContext = executionContext;
     }

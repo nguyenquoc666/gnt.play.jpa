@@ -3,11 +3,8 @@ package book;
 import com.google.inject.Inject;
 import controllers.BookController;
 import models.Book;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import play.data.FormFactory;
 import play.data.format.Formatters;
 import play.db.jpa.JPAApi;
@@ -17,12 +14,10 @@ import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.test.WithApplication;
 import play.twirl.api.Content;
 import repositories.BookRepository;
 import repositories.SBookRepository;
 
-import javax.persistence.EntityManager;
 import javax.validation.Validator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ForkJoinPool;
@@ -58,7 +53,7 @@ public class UnitTest{
         SBookRepository srepository = mock(SBookRepository.class);
         FormFactory formFactory = mock(FormFactory.class);
         HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
-        final BookController controller = new BookController(formFactory, repository, srepository, ec);
+        final BookController controller = new BookController(formFactory, repository, srepository, ec, jpaApi);
         final Result result = controller.index();
 
         assertThat(result.status()).isEqualTo(OK);
@@ -91,7 +86,7 @@ public class UnitTest{
         final CompletionStage<Result> stage = invokeWithContext(requestBuilder, () -> {
             HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
 
-            final BookController controller = new BookController(formFactory, repository, srepository, ec);
+            final BookController controller = new BookController(formFactory, repository, srepository, ec, jpaApi);
             return controller.addBook();
         });
 
@@ -118,7 +113,7 @@ public class UnitTest{
         final Result stage = invokeWithContext(requestBuilder, () -> {
             HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
 
-            final BookController controller = new BookController(formFactory, repository,srepository, ec);
+            final BookController controller = new BookController(formFactory, repository,srepository, ec, jpaApi);
             return controller.addBooks();
         });
 
@@ -136,7 +131,7 @@ public class UnitTest{
             FormFactory formFactory = mock(FormFactory.class);
             BookRepository repository = mock(BookRepository.class);
             SBookRepository srepository = mock(SBookRepository.class);
-            final BookController controller = new BookController(formFactory, repository,srepository, ec);
+            final BookController controller = new BookController(formFactory, repository,srepository, ec, jpaApi);
             return controller.deleteBook(1);
         });
 

@@ -2,7 +2,7 @@ package controllers;
 
 import models.Book;
 import play.data.FormFactory;
-import play.db.jpa.Transactional;
+import play.db.jpa.JPAApi;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -26,13 +26,15 @@ public class BookController extends Controller {
     private final SBookRepository sBookRepository;
     private final HttpExecutionContext ec;
     private int numQuery = 1;
+    private final JPAApi jpaApi;
 
     @Inject
-    public BookController(FormFactory formFactory, BookRepository bookRepository, SBookRepository sBookRepository ,HttpExecutionContext ec) {
+    public BookController(FormFactory formFactory, BookRepository bookRepository, SBookRepository sBookRepository, HttpExecutionContext ec, JPAApi jpaApi) {
         this.formFactory = formFactory;
         this.bookRepository = bookRepository;
         this.sBookRepository = sBookRepository;
         this.ec = ec;
+        this.jpaApi = jpaApi;
     }
 
     public Result index() {
@@ -88,5 +90,35 @@ public class BookController extends Controller {
         long result = endTime - startTime;
         System.out.println("Result: " + result);
         return ok(String.valueOf(result));
+    }
+
+    public Result addBookWithTran() {
+        Book book1 = new Book("book1", "pass1", 1.1);
+        Book book2 = new Book("book2", "pass2", 2.2);
+        System.out.println(book1);
+        System.out.println(book2);
+
+        jpaApi.withTransaction(() -> {
+            bookRepository.add(book1).thenApplyAsync(b -> {
+                return redirect(routes.BookController.index());
+            }, ec.current());
+
+            bookRepository.add(book2).thenApplyAsync(b -> {
+                return redirect(routes.BookController.index());
+            }, ec.current());
+        });
+
+        return ok();
+    }
+
+    public Result getBooksWithTran() {
+        jpaApi.withTransaction(() -> {
+            return bookRepository.list().thenApplyAsync(b -> {
+                System.out.println(toJson(b.collect(Collectors.toList())));
+                return ok(toJson(b.collect(Collectors.toList())));
+            }, ec.current());
+        });
+
+        return ok();
     }
 }
