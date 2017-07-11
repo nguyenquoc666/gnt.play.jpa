@@ -1,0 +1,6 @@
+[debug] Copy resource mappings: 
+[debug] 	(D:\WorkSpace\GNT\Project\play-jpa\conf\application.conf,D:\WorkSpace\GNT\Project\play-jpa\target\scala-2.11\classes\application.conf)
+[debug] 	(D:\WorkSpace\GNT\Project\play-jpa\conf\logback.xml,D:\WorkSpace\GNT\Project\play-jpa\target\scala-2.11\classes\logback.xml)
+[debug] 	(D:\WorkSpace\GNT\Project\play-jpa\conf\META-INF,D:\WorkSpace\GNT\Project\play-jpa\target\scala-2.11\classes\META-INF)
+[debug] 	(D:\WorkSpace\GNT\Project\play-jpa\conf\routes,D:\WorkSpace\GNT\Project\play-jpa\target\scala-2.11\classes\routes)
+[debug] 	(D:\WorkSpace\GNT\Project\play-jpa\conf\META-INF\persistence.xml,D:\WorkSpace\GNT\Project\play-jpa\target\scala-2.11\classes\META-INF\persistence.xml)
